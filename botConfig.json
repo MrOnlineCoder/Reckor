@@ -1,0 +1,27 @@
+{
+	"name": "Reckor", 
+	"debug": false,
+	"server": "irc.esper.net", 
+	"channel": "#Reckor", 
+	"greetings": { 
+		"enabled": true, 
+		"autoVoiceJoined": true, 
+		"greetJoined": true, 
+		"greeting": "Weclome, %name%"
+	},
+	"chatGuard": {
+		"enabled": true, 
+		"kickReason": "You have been kicked for swearing!", 
+		"bannedWords": [
+			"Reckor is useless"
+		]
+	},
+	"jokeList": [
+		"I really don't know any jokes",
+		"I am serious! No jokes!",
+		"Lorem ipsum?"
+	],
+	"disabledCommands": [
+		"joke"
+	]
+}
