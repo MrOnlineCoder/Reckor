@@ -14,6 +14,8 @@
   "author": "MrOnlineCoder",
   "license": "MIT",
   "dependencies": {
-    "irc": "^0.5.2"
+    "irc": "^0.5.2",
+    "node-stopwatch": "0.0.1",
+    "statman": "^0.9.2"
   }
 }

@@ -1,27 +1,35 @@
 {
-	"name": "Reckor", 
+	"name": "ReckorBot", 
 	"debug": false,
+	"cmdPrefix": "Reckor, ",
 	"server": "irc.esper.net", 
 	"channel": "#Reckor", 
 	"greetings": { 
-		"enabled": true, 
-		"autoVoiceJoined": true, 
-		"greetJoined": true, 
-		"greeting": "Weclome, %name%"
+		"enabled": false, 
+		"autoVoiceJoined": false, 
+		"greetJoined": false, 
+		"greeting": "Welcome, %name%!"
 	},
 	"chatGuard": {
 		"enabled": true, 
-		"kickReason": "You have been kicked for swearing!", 
+		"kickReason": "Kicked for using badwords!", 
 		"bannedWords": [
-			"Reckor is useless"
+			"Reckor is useless",
+			"fuck"
 		]
 	},
 	"jokeList": [
-		"I really don't know any jokes",
+		"No jokes today!",
 		"I am serious! No jokes!",
 		"Lorem ipsum?"
 	],
-	"disabledCommands": [
-		"joke"
-	]
+	"disabledCommands": ["kick"],
+	"notifyUnknownCommand": false,
+	"admin": {
+		"adminsList": [
+			"MrOnlineCoder"
+		],
+		"denyMessage": "access denied!"
+	},
+	"autoRejoin": true
 }

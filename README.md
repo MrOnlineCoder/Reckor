@@ -12,15 +12,21 @@ Example can be seen in botConfig.json
 
 ## Commands
 
-All messages, that start with ! are considered commands by bot.
+All messages, that start with command prefix (specified in config) are considered commands by bot.
 
 They are:
 
-* !botinfo - says general info about the bot by PM.
+* botinfo - says general info about the bot by PM.
 
-* !joke - chooses random joke from **jokeList** in config and sends it to channel
+* joke - chooses random joke from **jokeList** in config and sends it to channel
 
-* !time - says current time in PM
+* time - says current time in PM
+
+* reload (ADMIN) - reloads bot config.
+
+* disconnect (ADMIN) - disconnects and shut downs the bot.
+
+
 
 ## Useful sections
 
@@ -48,6 +54,10 @@ All bot's settings are in botConfig.json file. You always can edit them to custo
 
 * **name** - bot's nickname (string)
 
+* **debug** - toggle debug mode (boolean)
+
+* **cmdPrefix** - command prefix (string)
+
 * **channel** - channel to join, must start with # (string)
 
 * **server** - IRC server (string)
@@ -72,7 +82,18 @@ All bot's settings are in botConfig.json file. You always can edit them to custo
 
 * **jokeList** - list of jokes for !joke command (string array)
 
-* **disabledCommands** - list of disabled commands (no ! required) (string array)
+* **disabledCommands** - list of disabled commands (no command prefix required) (string array)
+
+* **notifyUnknownCommands** - should user be notified when he used unknown command (boolean)
+
+* **admin** - section for bot admins (object)
+
+	1. **adminsList** - list of users, which are bot admins. Bot admins can use commands with (ADMIN) label (string array)
+
+	2.**denyMessage** - message, that will be sent to non-admins that tried to use admin command (string)
+
+* **autoRejoin** - should bot auto-rejoin channel after kick? (boolean)
+	
 
 ## License: MIT
 ## By MrOnlineCoder
