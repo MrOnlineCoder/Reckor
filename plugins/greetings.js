@@ -5,7 +5,7 @@ var channel = "#reckor";
 
 var plugin = {
 	name: "Greetings",
-	load: function(botInstance, chan, cfg) {
+	load: function(botInstance, chan, cfg, regCmd) {
 		bot = botInstance;
 		autoVote = cfg.greetings.autoVoiceJoined;
 		greetJoined = cfg.greetings.greetJoined;

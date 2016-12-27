@@ -104,6 +104,7 @@ function requireUncached(module){
     return require(module);
 }
 
+
 function setup() {
     plugins = [];
     console.log("SETUP: loading config...");
@@ -112,11 +113,11 @@ function setup() {
     BotCommands.createCommands(bot, botConfig, adminPanel);
     console.log("SETUP: loading plugins...");
     for(var i=0;i<botConfig.plugins.length;i++) {
-        plugins.push(require("./plugins/"+botConfig.plugins[i]+".js"));
+        plugins.push(requireUncached("./plugins/"+botConfig.plugins[i]+".js"));
     }
     console.log("SETUP: configuring plugins...");
     for (var i=0;i<plugins.length;i++) {
-        plugins[i].load(bot, botConfig.channel, botConfig.pluginsConfig);
+        plugins[i].load(bot, botConfig.channel, botConfig.pluginsConfig, BotCommands.registerCommand);
     }
     console.log("SETUP: complete!");
 }
@@ -136,6 +137,7 @@ adminPanel = {
     },
     disconnect: function(msg) {
         console.log("BOT: disconnecting...");
+        bot.send("QUIT", msg);
         bot.disconnect(msg);
         console.log("--- SHUTDOWN ---");
         process.exit(0);

@@ -1,6 +1,6 @@
 # Reckor
 
-A simple IRC bot written in Javascript on Node.js
+A simple, extendable, customizable IRC bot written in Javascript on Node.js
 
 ## Usage
 

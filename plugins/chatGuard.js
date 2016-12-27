@@ -5,7 +5,7 @@ var channel;
 
 var plugin = {
 	name: "ChatGuard",
-	load: function(botInstance, chan, cfg) {
+	load: function(botInstance, chan, cfg, regCmd) {
 		bot = botInstance;
 		kickReason = cfg.chatGuard.kickReason;
 		bannedWords = cfg.chatGuard.bannedWords;

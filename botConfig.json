@@ -3,7 +3,7 @@
 	"debug": false,
 	"cmdPrefix": "Reckor, ",
 	"server": "irc.esper.net", 
-	"channel": "#Reckor", 
+	"channel": "#V", 
 	"disabledCommands": ["kick"],
 	"notifyUnknownCommand": false,
 	"admin": {
@@ -11,11 +11,11 @@
 			"MrOnlineCoder",
 			"Achai"
 		],
-		"adminCommands": ["reload", "disconnect", "rejoin"],
+		"adminCommands": ["reload", "disconnect", "rejoin", "opme"],
 		"denyMessage": "this command requires Admin rights."
 	},
 	"autoRejoin": true,
-	"plugins": ["chatGuard", "greetings"],
+	"plugins": ["chatGuard", "greetings", "scamPolice", "youtubeInfo"],
 	"pluginsConfig": {
 		"chatGuard": { 
 			"kickReason": "Kicked for swearing!", 
