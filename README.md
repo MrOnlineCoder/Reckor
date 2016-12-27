@@ -16,21 +16,29 @@ All messages, that start with command prefix (specified in config) are considere
 
 They are:
 
-* botinfo - says general info about the bot by PM.
+* botinfo - says general info about the bot
 
 * joke - chooses random joke from **jokeList** in config and sends it to channel
 
-* time - says current time in PM
+* time - says current time
 
-* reload (ADMIN) - reloads bot config.
+* reload - reloads bot config
 
-* disconnect (ADMIN) - disconnects and shut downs the bot.
+* disconnect <reason> - disconnects and shut downs the bot with <reason>
 
+* rejoin - forces bot to rejoin channel
 
+* coinflip <option1> <option2> - makes a random choice of two options or default heads/tails when no arguments specified
 
-## Useful sections
+* plugins - displays plugins list
 
-There are some sections, that add some functionality to bot.
+* uptime - shows bot's uptime 
+
+## Plugins
+
+Bot functionality can be extended with plugins. Plugin is a js-script file with special structure and all plugins are located in **plugins** folder.
+
+There are some default plugins.
 
 They are:
 
@@ -44,9 +52,6 @@ They are:
 
 	* can kick users when they used any word from **bannedWords** list in config
 
-3. Disabled commands
-
-	* you can disable some commands by adding them in that list
 
 ## Config 
 
@@ -62,23 +67,25 @@ All bot's settings are in botConfig.json file. You always can edit them to custo
 
 * **server** - IRC server (string)
 
-* **greetings** - settings for Greetings section (object)
+* **plugins** - list of plugins, which should be enabled (string array)
 
-	1.**enabled** - enable or disable that section (boolean)
+* **pluginsConfig** - config object for all plugins (object)
 
-	2.**autoVoiceJoined** - should bot give +v to user, when he joins the channel (boolean)
+Config objects for default plugins: 
 
-	3.**greetJoined** - should bot greet every user on join? (boolean)
+* **greetings** - settings for Greetings plugin (object)
 
-	4.**greeting** - greeting itself. Use %name% placeholder for user's name (string)
+	1.**autoVoiceJoined** - should bot give +v to user, when he joins the channel (boolean)
 
-* **chatGuard** - settings for ChatGuard section (object)
+	2.**greetJoined** - should bot greet every user on join? (boolean)
 
-	1.**enabled** - enable or disable that section (boolean)
+	3.**greeting** - greeting itself. Use %name% placeholder for user's name (string)
 
-	2.**kickReason** - reason which will be specified on kick (string)
+* **chatGuard** - settings for ChatGuard plugins (object)
 
-	3.**bannedWords** - array of words/phrases which should cause to kick the user (string array)
+	1.**kickReason** - reason which will be specified on kick (string)
+
+	2.**bannedWords** - array of words/phrases which should cause to kick the user (string array)
 
 * **jokeList** - list of jokes for !joke command (string array)
 
@@ -88,7 +95,9 @@ All bot's settings are in botConfig.json file. You always can edit them to custo
 
 * **admin** - section for bot admins (object)
 
-	1. **adminsList** - list of users, which are bot admins. Bot admins can use commands with (ADMIN) label (string array)
+	1. **adminsList** - list of users, which are bot admins. Bot admins can use admin commands (string array)
+
+	2. **adminCommands** - list of commands, which require admin rights. (string array)
 
 	2.**denyMessage** - message, that will be sent to non-admins that tried to use admin command (string)
 

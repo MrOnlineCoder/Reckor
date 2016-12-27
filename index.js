@@ -12,9 +12,10 @@
 */
 var irc = require("irc");
 var BotCommands = require("./lib/botCommands.js");
-var Greetings = require("./lib/greetings.js");
-var ChatGuard = require("./lib/chatGuard.js");
+//var Greetings = require("./lib/greetings.js");
+//var ChatGuard = require("./lib/chatGuard.js");
 var utils = require("./lib/utils.js");
+var plugins = [];
 /*
     =========
     Variables
@@ -23,6 +24,8 @@ var utils = require("./lib/utils.js");
 var botConfig = require("./botConfig.json");
 var bot;
 var adminPanel;
+console.log("--- STARTUP ---");
+console.log("BOT: Connecting to "+botConfig.server);
 
 bot = new irc.Client(botConfig.server, botConfig.name, {
     debug: botConfig.debug,
@@ -42,9 +45,11 @@ bot.addListener("error", function(message) {
 
 bot.addListener("message", function(nick, to, text, message) {
     console.log("IRC: <%s> %s", nick, text);
-    if (botConfig.chatGuard.enabled) ChatGuard.handle(bot, nick, text);
+    for (var i=0;i<plugins.length;i++) {
+        plugins[i].message(nick, text);
+    }
     if (utils.beginsWith(botConfig.cmdPrefix, text)) {
-        BotCommands.processCommand(bot, nick, text);
+        BotCommands.processCommand(nick, text);
     }
 });
 
@@ -63,12 +68,18 @@ bot.addListener("join", function(channel, who) {
         console.log("BOT: Successfully joined "+channel);
         return;
     }
-    if (botConfig.greetings.enabled) Greetings.handle(bot, who);
+    for (var i=0;i<plugins.length;i++) {
+        plugins[i].userJoin(who);
+    }
 });
 
 bot.addListener("part", function(channel, who, reason) {
     console.log("IRC: %s has left", who);
+    for (var i=0;i<plugins.length;i++) {
+        plugins[i].userLeft(who);
+    }
 });
+
 bot.addListener("kick", function(channel, who, by, reason) {
     console.log("IRC: %s was kicked from %s by %s: %s", who, channel, by, reason);
     if (who == botConfig.name) {
@@ -88,11 +99,26 @@ bot.addListener("kick", function(channel, who, by, reason) {
     Setup
     =====
 */
+function requireUncached(module){
+    delete require.cache[require.resolve(module)];
+    return require(module);
+}
+
 function setup() {
-    botConfig = require("./botConfig.json");
-    BotCommands.createCommands(botConfig, adminPanel);
-    Greetings.setup(botConfig);
-    ChatGuard.setup(botConfig);
+    plugins = [];
+    console.log("SETUP: loading config...");
+    botConfig = requireUncached("./botConfig.json");
+    BotCommands = requireUncached("./lib/botCommands.js");
+    BotCommands.createCommands(bot, botConfig, adminPanel);
+    console.log("SETUP: loading plugins...");
+    for(var i=0;i<botConfig.plugins.length;i++) {
+        plugins.push(require("./plugins/"+botConfig.plugins[i]+".js"));
+    }
+    console.log("SETUP: configuring plugins...");
+    for (var i=0;i<plugins.length;i++) {
+        plugins[i].load(bot, botConfig.channel, botConfig.pluginsConfig);
+    }
+    console.log("SETUP: complete!");
 }
 
 /*
@@ -104,7 +130,7 @@ function setup() {
 adminPanel = {
     reload: function() {
         console.log("ADMIN: reloading...");
-        bot.say(botConfig.channel, "Reloading config...");
+        bot.say(botConfig.channel, "Reloading...");
         setup();
         bot.say(botConfig.channel, "Reload complete!");
     },
@@ -113,6 +139,13 @@ adminPanel = {
         bot.disconnect(msg);
         console.log("--- SHUTDOWN ---");
         process.exit(0);
+    },
+    showPlugins: function() {
+        var pluginsNames = [];
+        for (var i=0;i<plugins.length;i++) {
+            pluginsNames.push(plugins[i].name);
+        }
+        bot.say(botConfig.channel, "Plugins: "+pluginsNames.join(" "));
     }
 };
 

@@ -4,32 +4,35 @@
 	"cmdPrefix": "Reckor, ",
 	"server": "irc.esper.net", 
 	"channel": "#Reckor", 
-	"greetings": { 
-		"enabled": false, 
-		"autoVoiceJoined": false, 
-		"greetJoined": false, 
-		"greeting": "Welcome, %name%!"
-	},
-	"chatGuard": {
-		"enabled": true, 
-		"kickReason": "Kicked for using badwords!", 
-		"bannedWords": [
-			"Reckor is useless",
-			"fuck"
-		]
-	},
-	"jokeList": [
-		"No jokes today!",
-		"I am serious! No jokes!",
-		"Lorem ipsum?"
-	],
 	"disabledCommands": ["kick"],
 	"notifyUnknownCommand": false,
 	"admin": {
 		"adminsList": [
-			"MrOnlineCoder"
+			"MrOnlineCoder",
+			"Achai"
 		],
-		"denyMessage": "access denied!"
+		"adminCommands": ["reload", "disconnect", "rejoin"],
+		"denyMessage": "this command requires Admin rights."
 	},
-	"autoRejoin": true
+	"autoRejoin": true,
+	"plugins": ["chatGuard", "greetings"],
+	"pluginsConfig": {
+		"chatGuard": { 
+			"kickReason": "Kicked for swearing!", 
+			"bannedWords": [
+				"Reckor is useless",
+				"fuck"
+			]
+		}, 
+		"greetings": { 
+			"autoVoiceJoined": false, 
+			"greetJoined":  false, 
+			"greeting": "Welcome, %name%!"
+		}
+	},
+	"jokeList": [
+		"Raja is scammer?",
+		"Oh, crap",
+		"Lorem ipsum?"
+	]
 }
