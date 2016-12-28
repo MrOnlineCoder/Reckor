@@ -4,7 +4,11 @@ A simple, extendable, customizable IRC bot written in Javascript on Node.js
 
 ## Usage
 
-Just run **node index.js** to start the bot.
+Install all dependecies by running **npm install**
+
+Run the bot: **node index.js [config path]**,
+
+where config path is optional, a path to config file. Default: botConfig.json
 
 A config file botConfig.json is required in the same folder.
 
@@ -33,6 +37,8 @@ They are:
 * plugins - displays plugins list
 
 * uptime - shows bot's uptime 
+
+* admins - shows bot's admins
 
 ## Plugins
 
@@ -103,6 +109,49 @@ Config objects for default plugins:
 
 * **autoRejoin** - should bot auto-rejoin channel after kick? (boolean)
 	
+## Developing own plugins
+
+You can extend bot's functionality by adding plugins. Plugin is a .js file with special structure.
+
+Enabled plugins are listed in **plugins** array in bot config.
+
+All plugins sources are in **plugins** folder, every plugin name in config corresponds to script with same name (e.g. plugins/chatGuard.js -> chatGuard in config)
+
+Plugin must export a single object that has 5 required fields. 
+
+Example:
+
+``javascript
+
+var plugin = {
+	name: "MyPlugin", // This name is decorative, used in **plugins** command.
+	load: function(botInstance, chan, cfg, regCmd) {
+		//That function is called on bot load/reload.
+		//Do all init there
+		//chan is channel to be joined
+		//botInstance is bot instance (save it in local scope to use it for say/send commands)
+		//cfg is plugin config (not bot's config!)
+		//regCmd is function, that registers commands 
+		//Usage: regCmd(name, functionHandler)
+	},
+	userJoin: function(who) {
+		//Called when new user joins, including bot itself
+		//who - username
+	},
+	message: function (from, msg) {
+		//Called when someone sent a message.
+		//From is sender (channel or nick)
+		//msg is message itself
+	},
+	userLeft: function (who) {
+		//Called when user lefts the channel
+		//who - username
+	}
+};
+
+module.exports = plugin;
+
+``` 
 
 ## License: MIT
 ## By MrOnlineCoder
