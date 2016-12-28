@@ -121,7 +121,7 @@ Plugin must export a single object that has 5 required fields.
 
 Example:
 
-``javascript
+```javascript
 
 var plugin = {
 	name: "MyPlugin", // This name is decorative, used in **plugins** command.
