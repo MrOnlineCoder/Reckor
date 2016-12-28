@@ -11,9 +11,8 @@
     ========
 */
 var irc = require("irc");
+var configPath = process.argv[2] || "./botConfig.json";
 var BotCommands = require("./lib/botCommands.js");
-//var Greetings = require("./lib/greetings.js");
-//var ChatGuard = require("./lib/chatGuard.js");
 var utils = require("./lib/utils.js");
 var plugins = [];
 /*
@@ -21,7 +20,7 @@ var plugins = [];
     Variables
     =========
 */
-var botConfig = require("./botConfig.json");
+var botConfig = require(configPath);
 var bot;
 var adminPanel;
 console.log("--- STARTUP ---");
@@ -108,7 +107,7 @@ function requireUncached(module){
 function setup() {
     plugins = [];
     console.log("SETUP: loading config...");
-    botConfig = requireUncached("./botConfig.json");
+    botConfig = requireUncached(configPath);
     BotCommands = requireUncached("./lib/botCommands.js");
     BotCommands.createCommands(bot, botConfig, adminPanel);
     console.log("SETUP: loading plugins...");
@@ -147,7 +146,7 @@ adminPanel = {
         for (var i=0;i<plugins.length;i++) {
             pluginsNames.push(plugins[i].name);
         }
-        bot.say(botConfig.channel, "Plugins: "+pluginsNames.join(" "));
+        bot.say(botConfig.channel, "Plugins ("+plugins.length+"): "+pluginsNames.join(" "));
     }
 };
 

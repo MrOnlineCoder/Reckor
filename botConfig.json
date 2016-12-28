@@ -3,25 +3,24 @@
 	"debug": false,
 	"cmdPrefix": "Reckor, ",
 	"server": "irc.esper.net", 
-	"channel": "#V", 
+	"channel": "#Reckor", 
 	"disabledCommands": ["kick"],
 	"notifyUnknownCommand": false,
 	"admin": {
 		"adminsList": [
 			"MrOnlineCoder",
-			"Achai"
 		],
 		"adminCommands": ["reload", "disconnect", "rejoin", "opme"],
 		"denyMessage": "this command requires Admin rights."
 	},
 	"autoRejoin": true,
-	"plugins": ["chatGuard", "greetings", "scamPolice", "youtubeInfo"],
+	"plugins": ["chatGuard", "greetings"],
 	"pluginsConfig": {
 		"chatGuard": { 
 			"kickReason": "Kicked for swearing!", 
 			"bannedWords": [
-				"Reckor is useless",
-				"fuck"
+				"banword1",
+				"crap"
 			]
 		}, 
 		"greetings": { 
@@ -31,8 +30,8 @@
 		}
 	},
 	"jokeList": [
-		"Raja is scammer?",
-		"Oh, crap",
+		"Joke 1",
+		"Joke 2",
 		"Lorem ipsum?"
 	]
 }
