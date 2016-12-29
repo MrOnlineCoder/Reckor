@@ -1,24 +1,21 @@
 var autoVoice = false;
 var greetJoined = false;
 var greeting = "Hello!";
-var channel = "#reckor";
 
 var plugin = {
 	name: "Greetings",
-	load: function(botInstance, chan, cfg, regCmd) {
-		bot = botInstance;
-		autoVote = cfg.greetings.autoVoiceJoined;
-		greetJoined = cfg.greetings.greetJoined;
-		greeting = cfg.greetings.greeting;
-		channel = chan;
+	load: function() {
+		autoVote = this.config.greetings.autoVoiceJoined;
+		greetJoined = this.config.greetings.greetJoined;
+		greeting = this.config.greetings.greeting;
 	},
 	userJoin: function(who) {
 		if (autoVoice) {
-			bot.send("MODE", channel, "+v", who);
+			this.bot.send("MODE", this.channel, "+v", who);
 		}
 
 		if (greetJoined) {
-			bot.say(channel, greeting.replace("%name%", who));
+			this.bot.say(this.channel, greeting.replace("%name%", who));
 		}
 	},
 	message: function (from, msg) {

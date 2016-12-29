@@ -1,31 +1,27 @@
-var bot;
-var channel;
 var request = require("request");
 
 
 var plugin = {
 	name: "YoutubeInfo",
-	load: function(botInstance, chan, cfg, regCmd) {
-		bot = botInstance;
-		channel = chan;
-		regCmd("youtubeInfo", this.cmdHandler);
+	load: function() {
+		this.regCmd("youtubeInfo", this.cmdHandler);
 	},
 	userJoin: function(who) {
 		//No OP
 	},
 	cmdHandler: function(from, args) {
 		if (args.length == 0) {
-			bot.say(channel, from+", usage: youtubeInfo <id>");
+			this.bot.say(this.channel, from+", usage: youtubeInfo <id>");
 		}
 		var id = args[0];
 		request("https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="+id+"&format=json", function (error, response, body) {
 		  var json = JSON.parse(body);
 		  if (!error && response.statusCode == 200) {
-		    bot.say(channel, "---[YouTube Info]---"); 
-		    bot.say(channel, "Title: "+json.title); 
-		    bot.say(channel, "Author: "+json.author_url); 
+		    this.bot.say(this.channel, "---[YouTube Info]---"); 
+		    this.bot.say(this.channel, "Title: "+json.title); 
+		    this.bot.say(this.channel, "Author: "+json.author_url); 
 		  } else {
-		  	bot.say(channel, "Failed to load data!");
+		  	this.bot.say(this.channel, "Failed to load data!");
 		  }
 		});
 	},

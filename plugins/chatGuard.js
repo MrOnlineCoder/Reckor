@@ -1,15 +1,11 @@
 var kickReason;
 var bannedWords;
-var bot;
-var channel;
 
 var plugin = {
 	name: "ChatGuard",
-	load: function(botInstance, chan, cfg, regCmd) {
-		bot = botInstance;
-		kickReason = cfg.chatGuard.kickReason;
-		bannedWords = cfg.chatGuard.bannedWords;
-		channel = chan;
+	load: function() {
+		kickReason = this.config.chatGuard.kickReason;
+		bannedWords = this.config.chatGuard.bannedWords;
 	},
 	userJoin: function(who) {
 		//No OP
@@ -17,7 +13,7 @@ var plugin = {
 	message: function (from, msg) {
 		for (var i=0;i<bannedWords.length;i++) {
 			if (msg.indexOf(bannedWords[i]) !== -1) {
-				bot.send("KICK", channel, from, kickReason);
+				this.bot.send("KICK", this.channel, from, kickReason);
 				return;
 			}
 		}
