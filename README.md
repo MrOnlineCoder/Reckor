@@ -125,18 +125,19 @@ Example:
 
 var plugin = {
 	name: "MyPlugin", // This name is decorative, used in **plugins** command.
-	load: function(botInstance, chan, cfg, regCmd) {
+	//Also, you can access bot/channel/commandRegister anywhere in your plugin
+	//this.bot == Bot instance
+	//this.channel == channel
+	//this.regCmd == function, call it to register command (args: name, handler function)
+	//this.config == plugin config
+	load: function() {
 		//That function is called on bot load/reload.
 		//Do all init there
-		//chan is channel to be joined
-		//botInstance is bot instance (save it in local scope to use it for say/send commands)
-		//cfg is plugin config (not bot's config!)
-		//regCmd is function, that registers commands 
-		//Usage: regCmd(name, functionHandler)
 	},
 	userJoin: function(who) {
 		//Called when new user joins, including bot itself
 		//who - username
+		this.bot.say(this.channel, "Hello "+who+". ");
 	},
 	message: function (from, msg) {
 		//Called when someone sent a message.
@@ -152,6 +153,7 @@ var plugin = {
 module.exports = plugin;
 
 ``` 
+
 
 ## License: MIT
 ## By MrOnlineCoder

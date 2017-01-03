@@ -4,7 +4,7 @@ var request = require("request");
 var plugin = {
 	name: "YoutubeInfo",
 	load: function() {
-		this.regCmd("youtubeInfo", this.cmdHandler);
+		this.commands = {youtubeInfo: this.cmdHandler};
 	},
 	userJoin: function(who) {
 		//No OP
@@ -12,6 +12,7 @@ var plugin = {
 	cmdHandler: function(from, args) {
 		if (args.length == 0) {
 			this.bot.say(this.channel, from+", usage: youtubeInfo <id>");
+			return;
 		}
 		var id = args[0];
 		request("https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v="+id+"&format=json", function (error, response, body) {

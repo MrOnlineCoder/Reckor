@@ -5,6 +5,7 @@
 */
 
 
+
 /*
     ========
     Requires
@@ -48,6 +49,7 @@ bot.addListener("message", function(nick, to, text, message) {
         plugins[i].message(nick, text);
     }
     if (utils.beginsWith(botConfig.cmdPrefix, text)) {
+
         BotCommands.processCommand(nick, text);
     }
 });
@@ -109,20 +111,20 @@ function setup() {
     console.log("SETUP: loading config...");
     botConfig = requireUncached(configPath);
     BotCommands = requireUncached("./lib/botCommands.js");
-    BotCommands.createCommands(bot, botConfig, adminPanel);
     console.log("SETUP: loading plugins...");
     for(var i=0;i<botConfig.plugins.length;i++) {
         var temp = requireUncached("./plugins/"+botConfig.plugins[i]+".js");
         temp.bot = bot;
         temp.config = botConfig.pluginsConfig;
         temp.channel = botConfig.channel;
-        temp.regCmd = BotCommands.registerCommand;
         plugins.push(temp);
     }
     console.log("SETUP: configuring plugins...");
     for (var i=0;i<plugins.length;i++) {
         plugins[i].load();
     }
+    console.log("SETUP: creating commands...");
+    BotCommands.createCommands(bot, botConfig, adminPanel, plugins);
     console.log("SETUP: complete!");
 }
 

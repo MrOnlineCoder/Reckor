@@ -15,7 +15,9 @@ var plugin = {
 		guessMsg = this.config.guessNum.guessMessage;
 		errorMsg = this.config.guessNum.errorMessage;
 		failMsg = this.config.guessNum.failMessage;
-		this.regCmd("guessNum", this.cmdHandler);
+		this.commands = {
+			guessNum: this.cmdHandler
+		};
 	},
 	userJoin: function(who) {
 		//No OP
@@ -29,7 +31,7 @@ var plugin = {
 		if (players[from] == null) return;
 		var guess = parseInt(msg);
 		if (isNaN(guess)) {
-			this.bot.say(this.channel, from+", "+errorMsg);
+			this.bot.say(chan, from+", "+errorMsg);
 			return;
 		}
 
